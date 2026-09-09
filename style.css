@@ -1,22 +1,22 @@
-/* 「ネイビー × ゴールド」テーマ(差し色に黄色) */
+/* 「ネイビー × ゴールド」テーマ(背景ネイビー・文字ゴールド・吹き出し黄色) */
 
 :root {
-  color-scheme: light;
-  --background: #faf6ea;
-  --foreground: #1b2a4a;
+  color-scheme: dark;
+  --background: #14213d;
+  --foreground: #e9d08c;
 
-  --surface-1: #ffffff;
-  --surface-2: #f3ecd3;
-  --text-primary: #1b2a4a;
-  --text-secondary: #52607a;
-  --text-muted: #9aa3bc;
-  --accent: #b8860b;
+  --surface-1: #1f2f52;
+  --surface-2: #1a2a4a;
+  --text-primary: #e9d08c;
+  --text-secondary: #b9a46b;
+  --text-muted: #8a805f;
+  --accent: #f2c744;
   --accent-2: #ffd400;
-  --gridline: #e9deb0;
-  --border: rgba(27, 42, 74, 0.16);
+  --gridline: #2e3e63;
+  --border: rgba(242, 199, 68, 0.28);
 
-  --gradient-primary: linear-gradient(135deg, #1b2a4a 0%, #2c3e63 45%, #c9a227 100%);
-  --glow-shadow: 0 10px 30px -8px rgba(27, 42, 74, 0.25);
+  --gradient-primary: linear-gradient(135deg, #c9a227 0%, #f2c744 100%);
+  --glow-shadow: 0 10px 26px -6px rgba(0, 0, 0, 0.5);
 }
 
 * {
@@ -67,7 +67,7 @@ main.wide {
 
 .tab-bar button.active {
   background: var(--gradient-primary);
-  color: #fff;
+  color: var(--background);
   box-shadow: var(--glow-shadow);
 }
 
@@ -194,7 +194,7 @@ input[type="text"]:focus {
   padding: 14px;
   font-size: 16px;
   font-weight: 900;
-  color: #fff;
+  color: var(--background);
   background: var(--gradient-primary);
   cursor: pointer;
   box-shadow: var(--glow-shadow);
@@ -214,7 +214,7 @@ input[type="text"]:focus {
 .error {
   margin-top: 12px;
   font-size: 13px;
-  color: #d9534f;
+  color: #ff8080;
   text-align: center;
 }
 
@@ -236,7 +236,7 @@ input[type="text"]:focus {
   z-index: 1;
   object-fit: contain;
   object-position: bottom;
-  filter: drop-shadow(0 6px 10px rgba(74, 44, 29, 0.18));
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.45));
   animation: bounce-in 0.35s ease-out;
 }
 
@@ -246,7 +246,7 @@ input[type="text"]:focus {
   position: relative;
   border-radius: 20px 20px 20px 4px;
   padding: 14px 16px;
-  background: var(--gradient-primary);
+  background: var(--accent-2);
   box-shadow: var(--glow-shadow);
   animation: bounce-in 0.35s ease-out;
 }
@@ -254,7 +254,7 @@ input[type="text"]:focus {
 .character-quote .label {
   font-size: 11px;
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(20, 33, 61, 0.7);
   margin: 0;
 }
 
@@ -263,7 +263,7 @@ input[type="text"]:focus {
   font-size: 15px;
   font-weight: 900;
   line-height: 1.5;
-  color: #fff;
+  color: var(--background);
 }
 
 .character-quote .quote-body {
@@ -271,7 +271,7 @@ input[type="text"]:focus {
   font-size: 13px;
   font-weight: 500;
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.92);
+  color: rgba(20, 33, 61, 0.85);
 }
 
 .challenge-header {
@@ -400,7 +400,7 @@ input[type="text"]:focus {
 
 .day-cell.is-filled {
   background: var(--gradient-primary);
-  color: #fff;
+  color: var(--background);
   border: none;
   box-shadow: var(--glow-shadow);
 }
