@@ -109,6 +109,7 @@
                   <th>お名前</th>
                   <th>チャレンジ内容</th>
                   <th>開始日</th>
+                  <th>経過</th>
                   <th>達成日数</th>
                   <th>最終更新</th>
                 </tr>
@@ -414,6 +415,10 @@
           startTd.textContent = s.start_date
           tr.appendChild(startTd)
 
+          const elapsedTd = document.createElement("td")
+          elapsedTd.textContent = formatElapsedDay(s.start_date)
+          tr.appendChild(elapsedTd)
+
           const countTd = document.createElement("td")
           countTd.className = "count"
           countTd.textContent = `${s.achieved_count || 0} / ${PROGRAM_LENGTH}`
@@ -434,6 +439,14 @@
         adminErrorEl.textContent = err && err.message ? err.message : "読み込みに失敗しました。"
         adminErrorEl.hidden = false
       }
+    }
+
+    function formatElapsedDay(startDate) {
+      const offset = dayOffsetFromStart(startDate)
+      const dayNumber = offset + 1
+      if (dayNumber < 1) return "開始前"
+      if (dayNumber > PROGRAM_LENGTH) return `終了(${PROGRAM_LENGTH}日目)`
+      return `${dayNumber}日目`
     }
 
     function formatUpdatedAt(iso) {

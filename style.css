@@ -249,9 +249,9 @@ input[type="text"]:focus {
 }
 
 .character-img {
-  width: 92px;
+  width: 150px;
   flex-shrink: 0;
-  margin-right: -6px;
+  margin-right: -10px;
   margin-bottom: -4px;
   z-index: 1;
   filter: drop-shadow(0 6px 10px rgba(74, 44, 29, 0.18));
