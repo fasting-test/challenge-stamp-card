@@ -1,10 +1,9 @@
-// 共通ロジック(登録ページ・カードページの両方から読み込む)
-// データはすべてこの端末のブラウザ(localStorage)だけに保存する。
-// 外部サービス(Supabaseなど)には一切送信しない。
+// 共通ロジック(登録ページ・カードページ・管理者ページから読み込む)
+// データはGoogle Apps Script経由でGoogleスプレッドシートに保存される。
+// (全受講生ぶんが1つのスプレッドシートに集約されるので、管理者が一覧で確認できる)
 
 const PROGRAM_LENGTH = 30
 const STUDENT_ID_KEY = "csc_student_id"
-const DB_KEY = "csc_db"
 
 // ---- 日付ユーティリティ(タイムゾーンによるズレを避けるため文字列ベースで計算) ----
 
@@ -87,25 +86,8 @@ function quoteForDay(doy) {
   return QUOTES[index]
 }
 
-// ---- ローカル保存データベース(この端末のブラウザだけに閉じたデータ) ----
-
-function loadDb() {
-  try {
-    const raw = localStorage.getItem(DB_KEY)
-    if (raw) return JSON.parse(raw)
-  } catch {
-    // 無視
-  }
-  return { students: {}, stamps: {} }
-}
-
-function saveDb(db) {
-  try {
-    localStorage.setItem(DB_KEY, JSON.stringify(db))
-  } catch {
-    // 保存できない環境(プライベートブラウズ等)では静かに諦める
-  }
-}
+// ---- 受講生IDの保存(この端末が「自分は誰か」を覚えておくためだけのもの。
+//      本体データはスプレッドシート側にある) ----
 
 function getStudentIdFromLocalStorage() {
   try {
@@ -131,53 +113,67 @@ function clearStudentIdFromLocalStorage() {
   }
 }
 
+// ---- Google Apps Script ウェブアプリとの通信 ----
+
+function getWebAppUrl() {
+  const url = window.SHEETS_CONFIG && window.SHEETS_CONFIG.webAppUrl
+  if (!url || url.indexOf("xxxx") !== -1) {
+    throw new Error("config.jsにGoogle Apps ScriptのウェブアプリURLを設定してください")
+  }
+  return url
+}
+
+async function apiGet(params) {
+  const url = new URL(getWebAppUrl())
+  Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v))
+  const res = await fetch(url.toString())
+  const data = await res.json()
+  if (data && data.error) throw new Error(apiErrorMessage(data.error))
+  return data
+}
+
+async function apiPost(body) {
+  // Content-Typeを明示しない(text/plainのままにする)ことで、
+  // Google Apps Script側でのCORSプリフライトの問題を回避する。
+  const res = await fetch(getWebAppUrl(), {
+    method: "POST",
+    body: JSON.stringify(body),
+  })
+  const data = await res.json()
+  if (data && data.error) throw new Error(apiErrorMessage(data.error))
+  return data
+}
+
+function apiErrorMessage(error) {
+  if (error === "not_found" || error === "student_not_found") return "データが見つかりませんでした"
+  if (error === "unknown_action") return "通信エラーが発生しました"
+  return error
+}
+
 // ---- 受講生・スタンプ操作 ----
-// 名前で登録する。既存(この端末内)の受講生と同じ名前ならその記録を返す(続きから)。
 
 async function registerOrResumeStudent(displayName, challenge) {
   const name = displayName.trim().slice(0, 40)
   if (!name) throw new Error("名前を入力してください")
-
-  const db = loadDb()
-  const existing = Object.values(db.students).find((s) => s.display_name.toLowerCase() === name.toLowerCase())
-  if (existing) return existing
-
   const trimmedChallenge = challenge.trim().slice(0, 80)
   if (!trimmedChallenge) throw new Error("チャレンジ内容を入力してください")
 
-  const id = crypto.randomUUID()
-  const student = { id, display_name: name, challenge: trimmedChallenge, start_date: todayStr() }
-  db.students[id] = student
-  db.stamps[id] = []
-  saveDb(db)
-  return student
+  return apiPost({ action: "registerOrResume", display_name: name, challenge: trimmedChallenge })
 }
 
 async function getStudentById(id) {
-  const db = loadDb()
-  return db.students[id] ?? null
-}
-
-async function getStampDates(studentId) {
-  const db = loadDb()
-  return new Set(db.stamps[studentId] ?? [])
+  if (!id) return null
+  const data = await apiGet({ action: "get", id })
+  return data && data.id ? data : null
 }
 
 async function toggleTodayStamp(studentId) {
-  const date = todayStr()
-  const db = loadDb()
-  const list = db.stamps[studentId] ?? []
-  const idx = list.indexOf(date)
-  if (idx >= 0) {
-    list.splice(idx, 1)
-    db.stamps[studentId] = list
-    saveDb(db)
-    return false
-  }
-  list.push(date)
-  db.stamps[studentId] = list
-  saveDb(db)
-  return true
+  const data = await apiPost({ action: "toggleStamp", student_id: studentId })
+  return data
+}
+
+async function listAllStudents() {
+  return apiGet({ action: "list" })
 }
 
 function fireConfetti() {

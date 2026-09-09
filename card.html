@@ -48,6 +48,7 @@
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <script src="config.js"></script>
   <script src="app.js"></script>
   <script>
     const loadingEl = document.getElementById("loading")
@@ -85,7 +86,7 @@
         return
       }
 
-      stampDates = await getStampDates(student.id)
+      stampDates = new Set(student.stamp_dates)
       todayOffset = dayOffsetFromStart(student.start_date)
 
       quoteText.textContent = quoteForDay(dayOfYear(todayStr()))
@@ -154,15 +155,10 @@
 
     async function handleToggle(day, btn) {
       btn.disabled = true
-      const willFill = !day.filled
       try {
-        const filled = await toggleTodayStamp(student.id)
-        if (filled) {
-          stampDates.add(day.date)
-          if (willFill) fireConfetti()
-        } else {
-          stampDates.delete(day.date)
-        }
+        const result = await toggleTodayStamp(student.id)
+        stampDates = new Set(result.stamp_dates)
+        if (result.filled) fireConfetti()
         render()
       } catch {
         // 失敗しても静かに再描画(ネットワーク不調時など)
