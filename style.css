@@ -289,6 +289,14 @@ input[type="text"]:focus {
   color: #fff;
 }
 
+.character-quote .quote-body {
+  margin: 6px 0 0;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.92);
+}
+
 .challenge-header {
   text-align: left;
 }

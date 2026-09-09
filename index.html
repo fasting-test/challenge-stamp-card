@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>31日間チャレンジ達成カード</title>
-  <link rel="stylesheet" href="style.css?v=2" />
+  <link rel="stylesheet" href="style.css?v=3" />
 </head>
 <body>
   <main id="main-el">
@@ -48,7 +48,8 @@
           <div class="hero-right">
             <div class="bubble">
               <p class="label">今日の一言</p>
-              <p class="quote" id="quote-text"></p>
+              <p class="quote" id="quote-title"></p>
+              <p class="quote-body" id="quote-body"></p>
             </div>
 
             <div class="challenge-header">
@@ -127,8 +128,8 @@
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
-  <script src="config.js?v=3"></script>
-  <script src="app.js?v=3"></script>
+  <script src="config.js?v=4"></script>
+  <script src="app.js?v=4"></script>
   <script>
     const ADMIN_SESSION_KEY = "csc_admin_ok"
     const DRAFT_KEY = "csc_register_draft"
@@ -166,7 +167,8 @@
     const submitBtn = document.getElementById("submit-btn")
     const registerErrorEl = document.getElementById("register-error")
 
-    const quoteText = document.getElementById("quote-text")
+    const quoteTitleEl = document.getElementById("quote-title")
+    const quoteBodyEl = document.getElementById("quote-body")
     const characterImgEl = document.getElementById("character-img")
     const studentNameEl = document.getElementById("student-name")
     const challengeTextEl = document.getElementById("challenge-text")
@@ -196,7 +198,9 @@
         stampDates = new Set(student.stamp_dates)
         todayOffset = dayOffsetFromStart(student.start_date)
         characterImgEl.src = randomCharacterImage()
-        quoteText.textContent = `${withChan(student.display_name)}、${quoteForDay(dayOfYear(todayStr()))}`
+        const todaysQuote = quoteForDay(todayOffset + 1)
+        quoteTitleEl.textContent = `${withChan(student.display_name)}、${todaysQuote.title}`
+        quoteBodyEl.textContent = todaysQuote.body
         studentNameEl.textContent = `${withSan(student.display_name)}のチャレンジ`
         challengeTextEl.textContent = `「${student.challenge}」`
         renderCard()
