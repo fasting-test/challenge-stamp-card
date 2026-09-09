@@ -46,6 +46,19 @@ function withSan(name) {
   return name.endsWith("さん") || name.endsWith("ちゃん") || name.endsWith("くん") ? name : `${name}さん`
 }
 
+// 名前がすでに「ちゃん」「さん」「くん」で終わっている場合は二重に付けない
+function withChan(name) {
+  return name.endsWith("ちゃん") || name.endsWith("さん") || name.endsWith("くん") ? name : `${name}ちゃん`
+}
+
+// ---- 今日の一言を話すキャラクター(3種類からランダム) ----
+
+const CHARACTER_IMAGES = ["images/character-1.png", "images/character-2.png", "images/character-3.png"]
+
+function randomCharacterImage() {
+  return CHARACTER_IMAGES[Math.floor(Math.random() * CHARACTER_IMAGES.length)]
+}
+
 // ---- 今日の一言 ----
 
 const QUOTES = [

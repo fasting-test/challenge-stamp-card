@@ -241,26 +241,44 @@ input[type="text"]:focus {
 
 /* --- card page --- */
 
-.quote-banner {
-  border-radius: 20px;
-  padding: 18px 20px;
-  text-align: center;
-  background: var(--gradient-primary);
-  box-shadow: var(--glow-shadow);
-  margin-bottom: 20px;
+.character-quote {
+  display: flex;
+  align-items: flex-end;
+  gap: 0;
+  margin-bottom: 24px;
+}
+
+.character-img {
+  width: 92px;
+  flex-shrink: 0;
+  margin-right: -6px;
+  margin-bottom: -4px;
+  z-index: 1;
+  filter: drop-shadow(0 6px 10px rgba(74, 44, 29, 0.18));
   animation: bounce-in 0.35s ease-out;
 }
 
-.quote-banner .label {
-  font-size: 12px;
+.character-quote .bubble {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  border-radius: 20px 20px 20px 4px;
+  padding: 14px 16px;
+  background: var(--gradient-primary);
+  box-shadow: var(--glow-shadow);
+  animation: bounce-in 0.35s ease-out;
+}
+
+.character-quote .label {
+  font-size: 11px;
   font-weight: 700;
   color: rgba(255, 255, 255, 0.85);
   margin: 0;
 }
 
-.quote-banner .quote {
-  margin: 6px 0 0;
-  font-size: 17px;
+.character-quote .quote {
+  margin: 4px 0 0;
+  font-size: 15px;
   font-weight: 900;
   line-height: 1.5;
   color: #fff;

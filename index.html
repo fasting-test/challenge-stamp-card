@@ -43,9 +43,12 @@
 
       <!-- スタンプカード -->
       <div id="student-card" hidden>
-        <div class="quote-banner">
-          <p class="label">今日の一言</p>
-          <p class="quote" id="quote-text"></p>
+        <div class="character-quote">
+          <img id="character-img" class="character-img" src="" alt="" />
+          <div class="bubble">
+            <p class="label">今日の一言</p>
+            <p class="quote" id="quote-text"></p>
+          </div>
         </div>
 
         <div class="challenge-header">
@@ -161,6 +164,7 @@
     const registerErrorEl = document.getElementById("register-error")
 
     const quoteText = document.getElementById("quote-text")
+    const characterImgEl = document.getElementById("character-img")
     const studentNameEl = document.getElementById("student-name")
     const challengeTextEl = document.getElementById("challenge-text")
     const rewardEl = document.getElementById("reward")
@@ -188,7 +192,8 @@
       if (student) {
         stampDates = new Set(student.stamp_dates)
         todayOffset = dayOffsetFromStart(student.start_date)
-        quoteText.textContent = quoteForDay(dayOfYear(todayStr()))
+        characterImgEl.src = randomCharacterImage()
+        quoteText.textContent = `${withChan(student.display_name)}、${quoteForDay(dayOfYear(todayStr()))}`
         studentNameEl.textContent = `${withSan(student.display_name)}のチャレンジ`
         challengeTextEl.textContent = `「${student.challenge}」`
         renderCard()
