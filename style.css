@@ -28,6 +28,8 @@ body {
   min-height: 100vh;
   display: flex;
   background-color: var(--background);
+  background-image: linear-gradient(160deg, #0c1424 0%, #1a2b4d 55%, #223a63 100%);
+  background-attachment: fixed;
   color: var(--foreground);
   font-family: "Hiragino Maru Gothic ProN", "Hiragino Sans", "Yu Gothic", sans-serif;
 }
