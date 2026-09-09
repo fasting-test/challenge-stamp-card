@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>30日間チャレンジ達成カード</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <div id="loading" class="loading">読み込み中...</div>
+
+    <div id="content" hidden>
+      <div class="lead">
+        <p class="eyebrow">30日間チャレンジ達成カード</p>
+        <h1>自分で決めたこと、<br />30日間やり通そう。</h1>
+        <p>毎日できたらスタンプをポン。<br />30個ぜんぶ貯まったら、ごほうびが待ってるよ。</p>
+      </div>
+
+      <form id="register-form">
+        <div class="field">
+          <label for="display_name">お名前(ニックネーム可)</label>
+          <input id="display_name" name="display_name" type="text" required maxlength="40" placeholder="例: 彩ちゃん" />
+        </div>
+
+        <div class="field">
+          <label for="challenge">決めたチャレンジ内容</label>
+          <input id="challenge" name="challenge" type="text" required maxlength="80" placeholder="例: 毎日10分読書する" />
+          <p class="hint">
+            以前と同じ名前を入力すると、続きから記録できます(その場合チャレンジ内容は最初に決めたものが使われます)。
+          </p>
+        </div>
+
+        <button type="submit" class="btn-primary" id="submit-btn">チャレンジをはじめる / 続きから</button>
+        <p class="error" id="error-msg" hidden></p>
+      </form>
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+  <script>
+    const DRAFT_KEY = "csc_register_draft"
+    const loadingEl = document.getElementById("loading")
+    const contentEl = document.getElementById("content")
+    const nameInput = document.getElementById("display_name")
+    const challengeInput = document.getElementById("challenge")
+    const form = document.getElementById("register-form")
+    const submitBtn = document.getElementById("submit-btn")
+    const errorEl = document.getElementById("error-msg")
+
+    async function init() {
+      // 既に登録済みならカードページへ
+      const existingId = getStudentIdFromLocalStorage()
+      if (existingId) {
+        try {
+          const student = await getStudentById(existingId)
+          if (student) {
+            window.location.href = "card.html"
+            return
+          }
+        } catch {
+          // 取得に失敗したら登録フォームを見せる
+        }
+      }
+
+      // 入力途中の下書きを復元(ページを閉じても消えないように)
+      try {
+        const raw = localStorage.getItem(DRAFT_KEY)
+        if (raw) {
+          const draft = JSON.parse(raw)
+          nameInput.value = draft.display_name ?? ""
+          challengeInput.value = draft.challenge ?? ""
+        }
+      } catch {
+        // 無視
+      }
+
+      loadingEl.hidden = true
+      contentEl.hidden = false
+    }
+
+    function saveDraft() {
+      try {
+        localStorage.setItem(
+          DRAFT_KEY,
+          JSON.stringify({ display_name: nameInput.value, challenge: challengeInput.value })
+        )
+      } catch {
+        // 無視
+      }
+    }
+
+    nameInput.addEventListener("input", saveDraft)
+    challengeInput.addEventListener("input", saveDraft)
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault()
+      errorEl.hidden = true
+      submitBtn.disabled = true
+      try {
+        const student = await registerOrResumeStudent(nameInput.value, challengeInput.value)
+        setStudentIdToLocalStorage(student.id)
+        try {
+          localStorage.removeItem(DRAFT_KEY)
+        } catch {
+          // 無視
+        }
+        window.location.href = "card.html"
+      } catch (err) {
+        errorEl.textContent = err && err.message ? err.message : "エラーが発生しました。もう一度お試しください。"
+        errorEl.hidden = false
+        submitBtn.disabled = false
+      }
+    })
+
+    init()
+  </script>
+</body>
+</html>
