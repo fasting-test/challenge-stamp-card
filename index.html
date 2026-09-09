@@ -7,64 +7,203 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main>
-    <div id="loading" class="loading">読み込み中...</div>
+  <main id="main-el">
+    <div class="tab-bar">
+      <button type="button" id="tab-btn-student" class="active">受講生</button>
+      <button type="button" id="tab-btn-admin">管理者</button>
+    </div>
 
-    <div id="content" hidden>
-      <div class="lead">
-        <p class="eyebrow">30日間チャレンジ達成カード</p>
-        <h1>自分で決めたこと、<br />30日間やり通そう。</h1>
-        <p>毎日できたらスタンプをポン。<br />30日フルコンプリートを目指そう！</p>
-      </div>
+    <!-- ==================== 受講生タブ ==================== -->
+    <div id="tab-panel-student" class="tab-panel">
+      <div id="student-loading" class="loading">読み込み中...</div>
 
-      <form id="register-form">
-        <div class="field">
-          <label for="display_name">お名前(ニックネーム可)</label>
-          <input id="display_name" name="display_name" type="text" required maxlength="40" placeholder="例: リエ" />
+      <!-- 登録フォーム -->
+      <div id="student-register" hidden>
+        <div class="lead">
+          <p class="eyebrow">30日間チャレンジ達成カード</p>
+          <h1>自分で決めたこと、<br />30日間やり通そう。</h1>
+          <p>毎日できたらスタンプをポン。<br />30日フルコンプリートを目指そう！</p>
         </div>
 
-        <div class="field">
-          <label for="challenge">決めたチャレンジ内容</label>
-          <input id="challenge" name="challenge" type="text" required maxlength="80" placeholder="例: 毎日スレッズ投稿する" />
-          <p class="hint">
-            以前と同じ名前を入力すると、続きから記録できます(その場合チャレンジ内容は最初に決めたものが使われます)。
+        <form id="register-form">
+          <div class="field">
+            <label for="display_name">お名前(ニックネーム可)</label>
+            <input id="display_name" name="display_name" type="text" required maxlength="40" placeholder="例: リエ" />
+          </div>
+
+          <div class="field">
+            <label for="challenge">決めたチャレンジ内容</label>
+            <input id="challenge" name="challenge" type="text" required maxlength="80" placeholder="例: 毎日スレッズ投稿する" />
+            <p class="hint">
+              以前と同じ名前を入力すると、続きから記録できます(その場合チャレンジ内容は最初に決めたものが使われます)。
+            </p>
+          </div>
+
+          <button type="submit" class="btn-primary" id="submit-btn">チャレンジをはじめる / 続きから</button>
+          <p class="error" id="register-error" hidden></p>
+        </form>
+      </div>
+
+      <!-- スタンプカード -->
+      <div id="student-card" hidden>
+        <div class="quote-banner">
+          <p class="label">今日の一言</p>
+          <p class="quote" id="quote-text"></p>
+        </div>
+
+        <div class="challenge-header">
+          <p class="name" id="student-name"></p>
+          <p class="challenge" id="challenge-text"></p>
+        </div>
+
+        <div id="reward" class="reward-card" hidden>
+          <p class="emoji">🎉🏆🎉</p>
+          <h2>30日間、やり通したね!</h2>
+          <p>
+            決めたことを最後まで続けたあなたは、もう自分を信じていい。<br />
+            これは、これからの自分への大きな自信になるよ。
           </p>
         </div>
 
-        <button type="submit" class="btn-primary" id="submit-btn">チャレンジをはじめる / 続きから</button>
-        <p class="error" id="error-msg" hidden></p>
-      </form>
+        <div id="progress" class="progress-wrap">
+          <p class="progress-count" id="progress-count"></p>
+          <div class="progress-bar">
+            <div class="progress-bar-fill" id="progress-fill"></div>
+          </div>
+        </div>
+
+        <div class="grid" id="day-grid"></div>
+
+        <p class="footnote" id="footnote"></p>
+
+        <div class="switch-link">
+          <button type="button" id="switch-btn">ちがう名前で使う</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== 管理者タブ ==================== -->
+    <div id="tab-panel-admin" class="tab-panel" hidden>
+      <div id="admin-pin-gate">
+        <div class="lead">
+          <p class="eyebrow">管理者専用</p>
+          <h1 style="font-size: 18px;">合言葉を入力してください</h1>
+        </div>
+        <form id="pin-form" class="pin-form">
+          <div class="field">
+            <input id="pin-input" type="text" inputmode="text" required placeholder="合言葉" autocomplete="off" />
+          </div>
+          <button type="submit" class="btn-primary">入る</button>
+          <p class="error" id="pin-error" hidden>合言葉が違います</p>
+        </form>
+      </div>
+
+      <div id="admin-content" hidden>
+        <div id="admin-loading" class="loading">読み込み中...</div>
+        <div id="admin-list" hidden>
+          <p class="admin-summary" id="admin-summary-text"></p>
+          <div class="admin-table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>お名前</th>
+                  <th>チャレンジ内容</th>
+                  <th>開始日</th>
+                  <th>達成日数</th>
+                  <th>最終更新</th>
+                </tr>
+              </thead>
+              <tbody id="admin-table-body"></tbody>
+            </table>
+          </div>
+          <button type="button" class="btn-primary admin-refresh" id="admin-refresh-btn">再読み込み</button>
+        </div>
+        <p class="error" id="admin-error" hidden></p>
+      </div>
     </div>
   </main>
 
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
   <script src="config.js"></script>
   <script src="app.js"></script>
   <script>
+    const ADMIN_SESSION_KEY = "csc_admin_ok"
     const DRAFT_KEY = "csc_register_draft"
-    const loadingEl = document.getElementById("loading")
-    const contentEl = document.getElementById("content")
+
+    const mainEl = document.getElementById("main-el")
+    const tabBtnStudent = document.getElementById("tab-btn-student")
+    const tabBtnAdmin = document.getElementById("tab-btn-admin")
+    const tabPanelStudent = document.getElementById("tab-panel-student")
+    const tabPanelAdmin = document.getElementById("tab-panel-admin")
+
+    // ---------------- タブ切り替え ----------------
+
+    function showTab(tab) {
+      const isStudent = tab === "student"
+      tabPanelStudent.hidden = !isStudent
+      tabPanelAdmin.hidden = isStudent
+      tabBtnStudent.classList.toggle("active", isStudent)
+      tabBtnAdmin.classList.toggle("active", !isStudent)
+      mainEl.classList.toggle("wide", !isStudent)
+      if (!isStudent) initAdminTab()
+    }
+
+    tabBtnStudent.addEventListener("click", () => showTab("student"))
+    tabBtnAdmin.addEventListener("click", () => showTab("admin"))
+
+    // ---------------- 受講生タブ ----------------
+
+    const studentLoadingEl = document.getElementById("student-loading")
+    const studentRegisterEl = document.getElementById("student-register")
+    const studentCardEl = document.getElementById("student-card")
+
     const nameInput = document.getElementById("display_name")
     const challengeInput = document.getElementById("challenge")
-    const form = document.getElementById("register-form")
+    const registerForm = document.getElementById("register-form")
     const submitBtn = document.getElementById("submit-btn")
-    const errorEl = document.getElementById("error-msg")
+    const registerErrorEl = document.getElementById("register-error")
 
-    async function init() {
-      // 既に登録済みならカードページへ
-      const existingId = getStudentIdFromLocalStorage()
-      if (existingId) {
+    const quoteText = document.getElementById("quote-text")
+    const studentNameEl = document.getElementById("student-name")
+    const challengeTextEl = document.getElementById("challenge-text")
+    const rewardEl = document.getElementById("reward")
+    const progressEl = document.getElementById("progress")
+    const progressCountEl = document.getElementById("progress-count")
+    const progressFillEl = document.getElementById("progress-fill")
+    const gridEl = document.getElementById("day-grid")
+    const footnoteEl = document.getElementById("footnote")
+    const switchBtn = document.getElementById("switch-btn")
+
+    let student = null
+    let stampDates = new Set()
+    let todayOffset = 0
+
+    async function initStudentTab() {
+      const studentId = getStudentIdFromLocalStorage()
+      if (studentId) {
         try {
-          const student = await getStudentById(existingId)
-          if (student) {
-            window.location.href = "card.html"
-            return
-          }
+          student = await getStudentById(studentId)
         } catch {
-          // 取得に失敗したら登録フォームを見せる
+          student = null
         }
       }
 
-      // 入力途中の下書きを復元(ページを閉じても消えないように)
+      if (student) {
+        stampDates = new Set(student.stamp_dates)
+        todayOffset = dayOffsetFromStart(student.start_date)
+        quoteText.textContent = quoteForDay(dayOfYear(todayStr()))
+        studentNameEl.textContent = `${withSan(student.display_name)}のチャレンジ`
+        challengeTextEl.textContent = `「${student.challenge}」`
+        renderCard()
+
+        studentLoadingEl.hidden = true
+        studentRegisterEl.hidden = true
+        studentCardEl.hidden = false
+        return
+      }
+
+      // 未登録、またはIDはあるが見つからない場合は登録フォームへ
+      clearStudentIdFromLocalStorage()
       try {
         const raw = localStorage.getItem(DRAFT_KEY)
         if (raw) {
@@ -76,8 +215,9 @@
         // 無視
       }
 
-      loadingEl.hidden = true
-      contentEl.hidden = false
+      studentLoadingEl.hidden = true
+      studentCardEl.hidden = true
+      studentRegisterEl.hidden = false
     }
 
     function saveDraft() {
@@ -90,31 +230,222 @@
         // 無視
       }
     }
-
     nameInput.addEventListener("input", saveDraft)
     challengeInput.addEventListener("input", saveDraft)
 
-    form.addEventListener("submit", async (e) => {
+    registerForm.addEventListener("submit", async (e) => {
       e.preventDefault()
-      errorEl.hidden = true
+      registerErrorEl.hidden = true
       submitBtn.disabled = true
       try {
-        const student = await registerOrResumeStudent(nameInput.value, challengeInput.value)
-        setStudentIdToLocalStorage(student.id)
+        const newStudent = await registerOrResumeStudent(nameInput.value, challengeInput.value)
+        setStudentIdToLocalStorage(newStudent.id)
         try {
           localStorage.removeItem(DRAFT_KEY)
         } catch {
           // 無視
         }
-        window.location.href = "card.html"
+        student = newStudent
+        await initStudentTab()
       } catch (err) {
-        errorEl.textContent = err && err.message ? err.message : "エラーが発生しました。もう一度お試しください。"
-        errorEl.hidden = false
+        registerErrorEl.textContent = err && err.message ? err.message : "エラーが発生しました。もう一度お試しください。"
+        registerErrorEl.hidden = false
+      } finally {
         submitBtn.disabled = false
       }
     })
 
-    init()
+    switchBtn.addEventListener("click", () => {
+      clearStudentIdFromLocalStorage()
+      student = null
+      nameInput.value = ""
+      challengeInput.value = ""
+      studentCardEl.hidden = true
+      studentRegisterEl.hidden = false
+    })
+
+    function buildDays() {
+      const days = []
+      for (let i = 0; i < PROGRAM_LENGTH; i++) {
+        const date = addDays(student.start_date, i)
+        days.push({
+          index: i + 1,
+          date,
+          filled: stampDates.has(date),
+          isToday: i === todayOffset,
+          isFuture: i > todayOffset,
+        })
+      }
+      return days
+    }
+
+    function renderCard() {
+      const days = buildDays()
+      const achievedCount = days.filter((d) => d.filled).length
+      const isComplete = achievedCount >= PROGRAM_LENGTH
+
+      rewardEl.hidden = !isComplete
+      progressEl.hidden = isComplete
+      if (!isComplete) {
+        progressCountEl.textContent = `${achievedCount} / ${PROGRAM_LENGTH} 日 達成中`
+        progressFillEl.style.width = `${(achievedCount / PROGRAM_LENGTH) * 100}%`
+      }
+
+      if (todayOffset >= 0 && todayOffset < PROGRAM_LENGTH) {
+        footnoteEl.textContent = "今日のマスをタップしてスタンプを押そう(もう一度タップで取り消せます)"
+      } else if (todayOffset < 0) {
+        footnoteEl.textContent = "チャレンジ開始日になったら、スタンプを押せるようになります"
+      } else {
+        footnoteEl.textContent = "30日間が終了しました。おつかれさまでした!"
+      }
+
+      gridEl.innerHTML = ""
+      for (const day of days) {
+        const btn = document.createElement("button")
+        btn.type = "button"
+        btn.className = "day-cell"
+        if (day.filled) btn.classList.add("is-filled")
+        if (day.isToday) btn.classList.add("is-today")
+        if (day.isFuture) btn.classList.add("is-future")
+        btn.textContent = day.filled ? "★" : String(day.index)
+        btn.setAttribute("aria-label", `${day.index}日目${day.filled ? "・達成済み" : ""}`)
+        if (day.isToday) {
+          btn.addEventListener("click", () => handleToggle(day))
+        } else {
+          btn.disabled = true
+        }
+        gridEl.appendChild(btn)
+      }
+    }
+
+    async function handleToggle(day) {
+      try {
+        const result = await toggleTodayStamp(student.id)
+        stampDates = new Set(result.stamp_dates)
+        if (result.filled) fireConfetti()
+        renderCard()
+      } catch {
+        renderCard()
+      }
+    }
+
+    // ---------------- 管理者タブ ----------------
+
+    const adminPinGateEl = document.getElementById("admin-pin-gate")
+    const adminContentEl = document.getElementById("admin-content")
+    const pinForm = document.getElementById("pin-form")
+    const pinInput = document.getElementById("pin-input")
+    const pinErrorEl = document.getElementById("pin-error")
+
+    const adminLoadingEl = document.getElementById("admin-loading")
+    const adminListEl = document.getElementById("admin-list")
+    const adminErrorEl = document.getElementById("admin-error")
+    const adminSummaryEl = document.getElementById("admin-summary-text")
+    const adminTableBody = document.getElementById("admin-table-body")
+    const adminRefreshBtn = document.getElementById("admin-refresh-btn")
+
+    let adminLoaded = false
+
+    function isAdminUnlocked() {
+      try {
+        return sessionStorage.getItem(ADMIN_SESSION_KEY) === "1"
+      } catch {
+        return false
+      }
+    }
+
+    function unlockAdmin() {
+      try {
+        sessionStorage.setItem(ADMIN_SESSION_KEY, "1")
+      } catch {
+        // 無視
+      }
+    }
+
+    function initAdminTab() {
+      if (isAdminUnlocked()) {
+        adminPinGateEl.hidden = true
+        adminContentEl.hidden = false
+        if (!adminLoaded) loadAdminList()
+      } else {
+        adminPinGateEl.hidden = false
+        adminContentEl.hidden = true
+      }
+    }
+
+    pinForm.addEventListener("submit", (e) => {
+      e.preventDefault()
+      const expected = window.SHEETS_CONFIG && window.SHEETS_CONFIG.adminPin
+      if (pinInput.value === expected) {
+        pinErrorEl.hidden = true
+        unlockAdmin()
+        adminPinGateEl.hidden = true
+        adminContentEl.hidden = false
+        loadAdminList()
+      } else {
+        pinErrorEl.hidden = false
+      }
+    })
+
+    async function loadAdminList() {
+      adminLoadingEl.hidden = false
+      adminListEl.hidden = true
+      adminErrorEl.hidden = true
+      try {
+        const students = await listAllStudents()
+        students.sort((a, b) => (b.achieved_count || 0) - (a.achieved_count || 0))
+
+        adminSummaryEl.textContent = `受講生 ${students.length}人`
+        adminTableBody.innerHTML = ""
+        for (const s of students) {
+          const tr = document.createElement("tr")
+
+          const nameTd = document.createElement("td")
+          nameTd.textContent = s.display_name
+          tr.appendChild(nameTd)
+
+          const challengeTd = document.createElement("td")
+          challengeTd.textContent = s.challenge
+          tr.appendChild(challengeTd)
+
+          const startTd = document.createElement("td")
+          startTd.textContent = s.start_date
+          tr.appendChild(startTd)
+
+          const countTd = document.createElement("td")
+          countTd.className = "count"
+          countTd.textContent = `${s.achieved_count || 0} / ${PROGRAM_LENGTH}`
+          tr.appendChild(countTd)
+
+          const updatedTd = document.createElement("td")
+          updatedTd.textContent = formatUpdatedAt(s.updated_at)
+          tr.appendChild(updatedTd)
+
+          adminTableBody.appendChild(tr)
+        }
+
+        adminLoaded = true
+        adminLoadingEl.hidden = true
+        adminListEl.hidden = false
+      } catch (err) {
+        adminLoadingEl.hidden = true
+        adminErrorEl.textContent = err && err.message ? err.message : "読み込みに失敗しました。"
+        adminErrorEl.hidden = false
+      }
+    }
+
+    function formatUpdatedAt(iso) {
+      if (!iso) return "-"
+      try {
+        return new Date(iso).toLocaleString("ja-JP", { month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit" })
+      } catch {
+        return iso
+      }
+    }
+
+    adminRefreshBtn.addEventListener("click", loadAdminList)
+
+    initStudentTab()
   </script>
 </body>
 </html>

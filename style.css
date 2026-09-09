@@ -60,6 +60,91 @@ main {
   padding: 48px 20px;
 }
 
+main.wide {
+  max-width: 720px;
+}
+
+/* --- タブ切り替え --- */
+
+.tab-bar {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 32px;
+}
+
+.tab-bar button {
+  border: none;
+  border-radius: 999px;
+  padding: 8px 20px;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  background: var(--surface-2);
+  color: var(--text-secondary);
+  transition: opacity 0.15s ease;
+}
+
+.tab-bar button.active {
+  background: var(--gradient-primary);
+  color: #fff;
+  box-shadow: var(--glow-shadow);
+}
+
+.tab-panel[hidden] {
+  display: none;
+}
+
+/* --- 管理者タブ --- */
+
+.pin-form {
+  max-width: 280px;
+  margin: 0 auto;
+}
+
+.admin-summary {
+  margin-bottom: 16px;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.admin-table-wrap {
+  overflow-x: auto;
+  border-radius: 16px;
+  background: var(--surface-1);
+  box-shadow: var(--glow-shadow);
+  padding: 4px 12px;
+}
+
+.admin-table-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.admin-table-wrap th,
+.admin-table-wrap td {
+  text-align: left;
+  padding: 10px 8px;
+  border-bottom: 1px solid var(--gridline);
+  white-space: nowrap;
+}
+
+.admin-table-wrap th {
+  color: var(--text-secondary);
+  font-weight: 700;
+}
+
+.admin-table-wrap td.count {
+  font-weight: 900;
+  color: var(--accent);
+}
+
+.admin-refresh {
+  margin-top: 16px;
+}
+
 .lead {
   text-align: center;
   margin-bottom: 40px;
