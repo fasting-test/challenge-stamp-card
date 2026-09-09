@@ -243,39 +243,35 @@ input[type="text"]:focus {
 
 .character-quote {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  align-items: flex-end;
+  gap: 6px;
   margin-bottom: 24px;
 }
 
 .character-img {
-  width: 300px;
-  max-width: 80%;
+  width: 190px;
+  flex-shrink: 0;
+  margin-right: -14px;
   z-index: 1;
-  margin-bottom: -12px;
   filter: drop-shadow(0 6px 10px rgba(74, 44, 29, 0.18));
   animation: bounce-in 0.35s ease-out;
 }
 
+.hero-right {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
 .character-quote .bubble {
   position: relative;
-  width: 100%;
-  border-radius: 20px;
-  padding: 16px 18px;
+  border-radius: 20px 20px 20px 4px;
+  padding: 14px 16px;
   background: var(--gradient-primary);
   box-shadow: var(--glow-shadow);
   animation: bounce-in 0.35s ease-out;
-}
-
-.character-quote .bubble::before {
-  content: "";
-  position: absolute;
-  top: -9px;
-  left: 50%;
-  transform: translateX(-50%);
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-bottom: 10px solid var(--accent);
 }
 
 .character-quote .label {
@@ -294,20 +290,19 @@ input[type="text"]:focus {
 }
 
 .challenge-header {
-  text-align: center;
-  margin-bottom: 24px;
+  text-align: left;
 }
 
 .challenge-header .name {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
   color: var(--text-secondary);
   margin: 0;
 }
 
 .challenge-header .challenge {
-  margin: 6px 0 0;
-  font-size: 21px;
+  margin: 4px 0 0;
+  font-size: 18px;
   font-weight: 900;
   color: var(--text-primary);
 }
