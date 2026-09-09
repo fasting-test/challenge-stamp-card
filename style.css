@@ -19,27 +19,6 @@
   --glow-shadow: 0 10px 30px -8px rgba(255, 138, 92, 0.28);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    color-scheme: dark;
-    --background: #2a1810;
-    --foreground: #ffe9d6;
-
-    --surface-1: #3a2417;
-    --surface-2: #452c1c;
-    --text-primary: #ffe9d6;
-    --text-secondary: #e3b391;
-    --text-muted: #a8836a;
-    --accent: #ff9d6f;
-    --accent-2: #ffd66b;
-    --gridline: #513423;
-    --border: rgba(255, 157, 111, 0.22);
-
-    --gradient-primary: linear-gradient(135deg, #ff9d6f 0%, #ffd66b 100%);
-    --glow-shadow: 0 10px 34px -6px rgba(255, 157, 111, 0.35);
-  }
-}
-
 * {
   box-sizing: border-box;
 }
@@ -249,9 +228,9 @@ input[type="text"]:focus {
 }
 
 .character-img {
-  height: 100%;
-  width: auto;
-  max-width: 40%;
+  align-self: stretch;
+  height: auto;
+  max-height: 220px;
   flex-shrink: 0;
   margin-right: -10px;
   z-index: 1;
