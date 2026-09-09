@@ -1,22 +1,22 @@
-/* 「朝焼け × ごほうび」テーマ */
+/* 「ネイビー × ゴールド」テーマ(差し色に黄色) */
 
 :root {
   color-scheme: light;
-  --background: #fff8f0;
-  --foreground: #4a2c1d;
+  --background: #faf6ea;
+  --foreground: #1b2a4a;
 
   --surface-1: #ffffff;
-  --surface-2: #fff1e2;
-  --text-primary: #4a2c1d;
-  --text-secondary: #97674a;
-  --text-muted: #c2a189;
-  --accent: #ff8a5c;
-  --accent-2: #ffc93c;
-  --gridline: #ffe4cf;
-  --border: rgba(255, 138, 92, 0.18);
+  --surface-2: #f3ecd3;
+  --text-primary: #1b2a4a;
+  --text-secondary: #52607a;
+  --text-muted: #9aa3bc;
+  --accent: #b8860b;
+  --accent-2: #ffd400;
+  --gridline: #e9deb0;
+  --border: rgba(27, 42, 74, 0.16);
 
-  --gradient-primary: linear-gradient(135deg, #ff8a5c 0%, #ffc93c 100%);
-  --glow-shadow: 0 10px 30px -8px rgba(255, 138, 92, 0.28);
+  --gradient-primary: linear-gradient(135deg, #1b2a4a 0%, #2c3e63 45%, #c9a227 100%);
+  --glow-shadow: 0 10px 30px -8px rgba(27, 42, 74, 0.25);
 }
 
 * {
