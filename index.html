@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>30日間チャレンジ達成カード</title>
+  <title>31日間チャレンジ達成カード</title>
   <link rel="stylesheet" href="style.css?v=2" />
 </head>
 <body>
@@ -20,9 +20,9 @@
       <!-- 登録フォーム -->
       <div id="student-register" hidden>
         <div class="lead">
-          <p class="eyebrow">30日間チャレンジ達成カード</p>
-          <h1>自分で決めたこと、<br />30日間やり通そう。</h1>
-          <p>毎日できたらスタンプをポン。<br />30日フルコンプリートを目指そう！</p>
+          <p class="eyebrow">31日間チャレンジ達成カード</p>
+          <h1>自分で決めたこと、<br />31日間やり通そう。</h1>
+          <p>毎日できたらスタンプをポン。<br />31日フルコンプリートを目指そう！</p>
         </div>
 
         <form id="register-form">
@@ -60,7 +60,7 @@
 
         <div id="reward" class="reward-card" hidden>
           <p class="emoji">🎉🏆🎉</p>
-          <h2>30日間、やり通したね!</h2>
+          <h2>31日間、やり通したね!</h2>
           <p>
             決めたことを最後まで続けたあなたは、もう自分を信じていい。<br />
             これは、これからの自分への大きな自信になるよ。
@@ -127,8 +127,8 @@
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
-  <script src="config.js?v=2"></script>
-  <script src="app.js?v=2"></script>
+  <script src="config.js?v=3"></script>
+  <script src="app.js?v=3"></script>
   <script>
     const ADMIN_SESSION_KEY = "csc_admin_ok"
     const DRAFT_KEY = "csc_register_draft"
@@ -301,7 +301,7 @@
       } else if (todayOffset < 0) {
         footnoteEl.textContent = "チャレンジ開始日になったら、スタンプを押せるようになります"
       } else {
-        footnoteEl.textContent = "30日間が終了しました。おつかれさまでした!"
+        footnoteEl.textContent = "31日間が終了しました。おつかれさまでした!"
       }
 
       gridEl.innerHTML = ""
