@@ -52,7 +52,7 @@
             <p class="label">今日の一言</p>
             <p class="quote" id="quote-title"></p>
             <p class="quote-body" id="quote-body"></p>
-            <a class="audio-link" href="https://skipf-members.vercel.app/audio.html" target="_blank" rel="noopener noreferrer">🎧 今日の音声を聞く</a>
+            <a class="audio-link" id="audio-link" href="https://skipf-members.vercel.app/audio.html" target="_blank" rel="noopener noreferrer">🎧 今日の音声を聞く</a>
           </div>
         </div>
 
@@ -173,6 +173,7 @@
 
     const quoteTitleEl = document.getElementById("quote-title")
     const quoteBodyEl = document.getElementById("quote-body")
+    const audioLinkEl = document.getElementById("audio-link")
     const characterImgEl = document.getElementById("character-img")
     const studentNameEl = document.getElementById("student-name")
     const challengeTextEl = document.getElementById("challenge-text")
@@ -202,9 +203,11 @@
         stampDates = new Set(student.stamp_dates)
         todayOffset = dayOffsetFromStart(student.start_date)
         characterImgEl.src = randomCharacterImage()
-        const todaysQuote = quoteForDay(todayOffset + 1)
+        const dayNumber = Math.min(Math.max(todayOffset + 1, 1), PROGRAM_LENGTH)
+        const todaysQuote = quoteForDay(dayNumber)
         quoteTitleEl.textContent = `${withChan(student.display_name)}、${todaysQuote.title}`
         quoteBodyEl.textContent = todaysQuote.body
+        audioLinkEl.href = `https://skipf-members.vercel.app/audio.html?day=${dayNumber}`
         studentNameEl.textContent = `${withSan(student.display_name)}のチャレンジ`
         challengeTextEl.textContent = `「${student.challenge}」`
         renderCard()
