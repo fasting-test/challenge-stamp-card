@@ -1,22 +1,23 @@
-/* 「ベージュ × ネイビー」テーマ(背景ベージュ・文字ネイビー・スタンプはゴールド) */
+/* 「ネイビー × ゴールド」エディトリアルテーマ(セリフ見出し・ダイヤの区切り) */
 
 :root {
-  color-scheme: light;
-  --background: #f0e6d0;
-  --foreground: #1b2a4a;
+  color-scheme: dark;
+  --background: #0e1a34;
+  --foreground: #f4efe0;
 
-  --surface-1: #ffffff;
-  --surface-2: #e8dab4;
-  --text-primary: #1b2a4a;
-  --text-secondary: #52607a;
-  --text-muted: #9aa3bc;
-  --accent: #b8860b;
-  --accent-2: #ffd400;
-  --gridline: #e3d5ac;
-  --border: rgba(27, 42, 74, 0.16);
+  --surface-1: #17284a;
+  --surface-2: #1d3055;
+  --text-primary: #ecd18f;
+  --text-secondary: #aab4cc;
+  --text-muted: #7c88a3;
+  --accent: #d9b976;
+  --accent-2: #e8c87e;
+  --gridline: rgba(217, 185, 118, 0.2);
+  --border: rgba(217, 185, 118, 0.28);
 
   --gradient-primary: linear-gradient(135deg, #c9a227 0%, #f2c744 100%);
-  --glow-shadow: 0 10px 30px -8px rgba(27, 42, 74, 0.2);
+  --glow-shadow: 0 10px 26px -6px rgba(0, 0, 0, 0.5);
+  --font-serif: "Shippori Mincho B1", "Hiragino Mincho ProN", serif;
 }
 
 * {
@@ -30,6 +31,20 @@ body {
   background-color: var(--background);
   color: var(--foreground);
   font-family: "Hiragino Maru Gothic ProN", "Hiragino Sans", "Yu Gothic", sans-serif;
+}
+
+.diamond-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 24px 0;
+}
+
+.diamond-divider .diamond {
+  width: 10px;
+  height: 10px;
+  background: var(--accent);
+  transform: rotate(45deg);
 }
 
 main {
@@ -67,7 +82,7 @@ main.wide {
 
 .tab-bar button.active {
   background: var(--gradient-primary);
-  color: var(--foreground);
+  color: var(--background);
   box-shadow: var(--glow-shadow);
 }
 
@@ -130,16 +145,18 @@ main.wide {
 }
 
 .lead .eyebrow {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
+  letter-spacing: 0.16em;
   color: var(--accent);
   margin: 0;
 }
 
 .lead h1 {
-  font-size: 22px;
-  font-weight: 900;
-  line-height: 1.5;
+  font-family: var(--font-serif);
+  font-size: 23px;
+  font-weight: 800;
+  line-height: 1.6;
   margin: 12px 0 0;
   color: var(--text-primary);
 }
@@ -194,7 +211,7 @@ input[type="text"]:focus {
   padding: 14px;
   font-size: 16px;
   font-weight: 900;
-  color: var(--foreground);
+  color: var(--background);
   background: var(--gradient-primary);
   cursor: pointer;
   box-shadow: var(--glow-shadow);
@@ -214,7 +231,7 @@ input[type="text"]:focus {
 .error {
   margin-top: 12px;
   font-size: 13px;
-  color: #d9534f;
+  color: #ff8f8f;
   text-align: center;
 }
 
@@ -239,45 +256,37 @@ input[type="text"]:focus {
 .character-quote .bubble {
   position: relative;
   width: 100%;
-  border-radius: 20px;
-  padding: 16px 18px;
-  background: var(--accent-2);
+  border-radius: 4px 14px 14px 4px;
+  border-left: 3px solid var(--accent);
+  padding: 16px 20px;
+  background: var(--surface-1);
   box-shadow: var(--glow-shadow);
   animation: bounce-in 0.35s ease-out;
-}
-
-.character-quote .bubble::before {
-  content: "";
-  position: absolute;
-  top: -9px;
-  left: 50%;
-  transform: translateX(-50%);
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-bottom: 10px solid var(--accent-2);
 }
 
 .character-quote .label {
   font-size: 11px;
   font-weight: 700;
-  color: rgba(20, 33, 61, 0.7);
+  letter-spacing: 0.08em;
+  color: var(--accent);
   margin: 0;
 }
 
 .character-quote .quote {
-  margin: 4px 0 0;
-  font-size: 15px;
-  font-weight: 900;
-  line-height: 1.5;
-  color: var(--foreground);
+  font-family: var(--font-serif);
+  margin: 6px 0 0;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1.6;
+  color: var(--text-primary);
 }
 
 .character-quote .quote-body {
-  margin: 6px 0 0;
+  margin: 8px 0 0;
   font-size: 13px;
   font-weight: 500;
-  line-height: 1.6;
-  color: rgba(20, 33, 61, 0.85);
+  line-height: 1.7;
+  color: var(--text-secondary);
 }
 
 .audio-link {
@@ -285,8 +294,8 @@ input[type="text"]:focus {
   margin-top: 12px;
   padding: 8px 16px;
   border-radius: 999px;
-  background: var(--foreground);
-  color: var(--accent-2);
+  background: var(--gradient-primary);
+  color: var(--background);
   font-size: 13px;
   font-weight: 700;
   text-decoration: none;
@@ -309,9 +318,10 @@ input[type="text"]:focus {
 }
 
 .challenge-header .challenge {
+  font-family: var(--font-serif);
   margin: 4px 0 0;
-  font-size: 18px;
-  font-weight: 900;
+  font-size: 19px;
+  font-weight: 800;
   color: var(--text-primary);
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -364,9 +374,10 @@ input[type="text"]:focus {
 }
 
 .reward-card h2 {
+  font-family: var(--font-serif);
   margin: 10px 0 0;
-  font-size: 19px;
-  font-weight: 900;
+  font-size: 20px;
+  font-weight: 800;
   color: var(--text-primary);
 }
 
@@ -422,7 +433,7 @@ input[type="text"]:focus {
 
 .day-cell.is-filled {
   background: var(--gradient-primary);
-  color: var(--foreground);
+  color: var(--background);
   border: none;
   box-shadow: var(--glow-shadow);
 }
