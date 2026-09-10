@@ -82,10 +82,6 @@
         <div class="grid" id="day-grid"></div>
 
         <p class="footnote" id="footnote"></p>
-
-        <div class="switch-link">
-          <button type="button" id="switch-btn">ちがう名前で使う</button>
-        </div>
       </div>
     </div>
 
@@ -183,7 +179,6 @@
     const progressFillEl = document.getElementById("progress-fill")
     const gridEl = document.getElementById("day-grid")
     const footnoteEl = document.getElementById("footnote")
-    const switchBtn = document.getElementById("switch-btn")
 
     let student = null
     let stampDates = new Set()
@@ -269,15 +264,6 @@
       } finally {
         submitBtn.disabled = false
       }
-    })
-
-    switchBtn.addEventListener("click", () => {
-      clearStudentIdFromLocalStorage()
-      student = null
-      nameInput.value = ""
-      challengeInput.value = ""
-      studentCardEl.hidden = true
-      studentRegisterEl.hidden = false
     })
 
     function buildDays() {

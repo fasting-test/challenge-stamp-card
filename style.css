@@ -450,22 +450,6 @@ input[type="text"]:focus {
   color: var(--text-muted);
 }
 
-.switch-link {
-  margin-top: 32px;
-  text-align: center;
-}
-
-.switch-link button {
-  background: none;
-  border: none;
-  font-size: 12px;
-  text-decoration: underline;
-  text-underline-offset: 2px;
-  color: var(--text-muted);
-  cursor: pointer;
-  font-family: inherit;
-}
-
 .loading {
   text-align: center;
   color: var(--text-muted);
