@@ -222,33 +222,39 @@ input[type="text"]:focus {
 
 .character-quote {
   display: flex;
-  align-items: stretch;
-  gap: 8px;
+  flex-direction: column;
+  align-items: center;
   margin-bottom: 20px;
 }
 
 .character-img {
-  align-self: stretch;
+  width: 170px;
   height: auto;
-  max-height: 220px;
-  flex-shrink: 0;
-  margin-right: -10px;
+  margin-bottom: -6px;
   z-index: 1;
-  object-fit: contain;
-  object-position: bottom;
-  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.45));
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.35));
   animation: bounce-in 0.35s ease-out;
 }
 
 .character-quote .bubble {
-  flex: 1;
-  min-width: 0;
   position: relative;
-  border-radius: 20px 20px 20px 4px;
-  padding: 14px 16px;
+  width: 100%;
+  border-radius: 20px;
+  padding: 16px 18px;
   background: var(--accent-2);
   box-shadow: var(--glow-shadow);
   animation: bounce-in 0.35s ease-out;
+}
+
+.character-quote .bubble::before {
+  content: "";
+  position: absolute;
+  top: -9px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid var(--accent-2);
 }
 
 .character-quote .label {
