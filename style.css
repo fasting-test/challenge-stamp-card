@@ -280,6 +280,22 @@ input[type="text"]:focus {
   color: rgba(20, 33, 61, 0.85);
 }
 
+.audio-link {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: var(--foreground);
+  color: var(--accent-2);
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.audio-link:hover {
+  opacity: 0.9;
+}
+
 .challenge-header {
   text-align: left;
   margin-bottom: 24px;
