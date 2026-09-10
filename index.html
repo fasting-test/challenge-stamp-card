@@ -325,13 +325,31 @@
       }
     }
 
+    let isToggling = false
+
     async function handleToggle(day) {
+      if (isToggling) return
+      isToggling = true
+
+      // 通信を待たずに先に画面を更新する(体感速度優先)。
+      // サーバーとの通信が終わったら結果で確定し、失敗時だけ元に戻す。
+      const previousStampDates = new Set(stampDates)
+      const willFill = !day.filled
+      if (willFill) {
+        stampDates.add(day.date)
+        fireConfetti()
+      } else {
+        stampDates.delete(day.date)
+      }
+      renderCard()
+
       try {
         const result = await toggleTodayStamp(student.id)
         stampDates = new Set(result.stamp_dates)
-        if (result.filled) fireConfetti()
-        renderCard()
       } catch {
+        stampDates = previousStampDates
+      } finally {
+        isToggling = false
         renderCard()
       }
     }
