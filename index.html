@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;700;800&display=swap" />
-  <link rel="stylesheet" href="style.css?v=13" />
+  <link rel="stylesheet" href="style.css?v=14" />
 </head>
 <body>
   <main id="main-el">
@@ -29,9 +29,19 @@
         </div>
 
         <form id="register-form">
+          <div class="name-notice">
+            <p class="name-notice-main">📌 お名前は、SkipFマイページの「呼び名」とまったく同じに入力してください(「ちゃん」「さん」や記号もそのまま)</p>
+            <p class="name-notice-sub">(呼び名は、マイページを開いたときに上に表示されている名前です)</p>
+            <ul class="name-notice-list">
+              <li>スマホとパソコンを両方使う場合も、同じ名前を入れれば続きから記録できます</li>
+              <li>名前が1文字でも違うと、別のカードとして扱われてしまいます</li>
+              <li>同じ名前を入れた人とは、カードが共有されてしまいます</li>
+            </ul>
+          </div>
+
           <div class="field">
-            <label for="display_name">お名前(ニックネーム可)</label>
-            <input id="display_name" name="display_name" type="text" required maxlength="40" placeholder="例: リエ" />
+            <label for="display_name">お名前(マイページの呼び名)</label>
+            <input id="display_name" name="display_name" type="text" required maxlength="40" placeholder="例: マイページの呼び名そのまま" />
           </div>
 
           <div class="field">
