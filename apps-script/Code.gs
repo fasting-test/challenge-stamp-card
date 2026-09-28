@@ -11,6 +11,10 @@
 const SHEET_NAME = "students"
 const HEADERS = ["id", "display_name", "challenge", "start_date", "stamp_dates", "achieved_count", "created_at", "updated_at"]
 
+// チャレンジ全体の開始日(固定)。いつ登録しても、この日が1日目になる。
+// (全員がそろって10/31にランキング発表できるようにするため)
+const PROGRAM_START_DATE = "2026-10-01"
+
 function doGet(e) {
   try {
     const action = (e.parameter.action || "list")
@@ -153,7 +157,7 @@ function registerOrResume(displayName, challenge) {
 
   const id = Utilities.getUuid()
   const now = new Date().toISOString()
-  const start = todayStr()
+  const start = PROGRAM_START_DATE
   sheet.appendRow([id, name, trimmedChallenge, start, "", 0, now, now])
   return {
     id,
