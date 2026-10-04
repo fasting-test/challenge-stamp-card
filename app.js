@@ -170,8 +170,9 @@ function apiErrorMessage(error) {
 async function registerOrResumeStudent(displayName, challenge) {
   const name = displayName.trim().slice(0, 40)
   if (!name) throw new Error("名前を入力してください")
+  // 空欄のままでも送る。登録済みの名前なら続きから再開でき、
+  // 新規の名前で空欄ならサーバーが「チャレンジ内容を入力してください」と返す。
   const trimmedChallenge = challenge.trim().slice(0, 80)
-  if (!trimmedChallenge) throw new Error("チャレンジ内容を入力してください")
 
   return apiPost({ action: "registerOrResume", display_name: name, challenge: trimmedChallenge })
 }

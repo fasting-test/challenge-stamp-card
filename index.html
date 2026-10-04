@@ -33,9 +33,8 @@
             <p class="name-notice-main">📌 お名前は、SkipFマイページの「呼び名」とまったく同じに入力してください(「ちゃん」「さん」や記号もそのまま)</p>
             <p class="name-notice-sub">(呼び名は、マイページを開いたときに上に表示されている名前です)</p>
             <ul class="name-notice-list">
-              <li>スマホとパソコンを両方使う場合も、同じ名前を入れれば続きから記録できます</li>
+              <li>スマホとパソコンを両方使う場合も、同じ名前を入れれば続きから記録できます(続きから再開するときは、チャレンジ内容は空欄でOKです)</li>
               <li>名前が1文字でも違うと、別のカードとして扱われてしまいます</li>
-              <li>同じ名前を入れた人とは、カードが共有されてしまいます</li>
             </ul>
           </div>
 
@@ -46,7 +45,7 @@
 
           <div class="field">
             <label for="challenge">決めたチャレンジ内容</label>
-            <input id="challenge" name="challenge" type="text" required maxlength="80" placeholder="例: 毎日スレッズ投稿する" />
+            <input id="challenge" name="challenge" type="text" maxlength="80" placeholder="例: 毎日スレッズ投稿する" />
           </div>
 
           <button type="submit" class="btn-primary" id="submit-btn">チャレンジをはじめる / 続きから</button>
@@ -139,7 +138,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
   <script src="config.js?v=4"></script>
-  <script src="app.js?v=4"></script>
+  <script src="app.js?v=5"></script>
   <script>
     const ADMIN_SESSION_KEY = "csc_admin_ok"
     const DRAFT_KEY = "csc_register_draft"
