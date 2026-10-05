@@ -490,6 +490,23 @@ input[type="text"]:focus {
   color: var(--text-muted);
 }
 
+.btn-link {
+  display: block;
+  margin: 16px auto 0;
+  padding: 8px 12px;
+  border: none;
+  background: none;
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: 12px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.btn-link:hover {
+  color: var(--text-primary);
+}
+
 .loading {
   text-align: center;
   color: var(--text-muted);
