@@ -183,8 +183,9 @@ async function getStudentById(id) {
   return data && data.id ? data : null
 }
 
-async function toggleTodayStamp(studentId) {
-  const data = await apiPost({ action: "toggleStamp", student_id: studentId })
+// date: 押す(取り消す)日付 "yyyy-MM-dd"。今日以前なら、押し忘れた日にもあとから押せる
+async function toggleStamp(studentId, date) {
+  const data = await apiPost({ action: "toggleStamp", student_id: studentId, date })
   return data
 }
 

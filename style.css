@@ -454,6 +454,17 @@ input[type="text"]:focus {
   opacity: 0.6;
 }
 
+/* 今日より前で、まだ押していないマス(あとから押せる) */
+.day-cell.is-open {
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: transform 0.1s ease;
+}
+
+.day-cell.is-open:active {
+  transform: scale(0.95);
+}
+
 .day-cell.is-today {
   background: var(--surface-1);
   color: var(--accent);

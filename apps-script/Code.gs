@@ -14,6 +14,7 @@ const HEADERS = ["id", "display_name", "challenge", "start_date", "stamp_dates",
 // チャレンジ全体の開始日(固定)。いつ登録しても、この日が1日目になる。
 // (全員がそろって10/31にランキング発表できるようにするため)
 const PROGRAM_START_DATE = "2026-10-01"
+const PROGRAM_LENGTH = 31
 
 function doGet(e) {
   try {
@@ -36,7 +37,7 @@ function doPost(e) {
         return respond(registerOrResume(body.display_name, body.challenge))
       }
       if (body.action === "toggleStamp") {
-        return respond(toggleStamp(body.student_id))
+        return respond(toggleStamp(body.student_id, body.date))
       }
       return respond({ error: "unknown_action" })
     } finally {
@@ -171,25 +172,38 @@ function registerOrResume(displayName, challenge) {
   }
 }
 
-function toggleStamp(studentId) {
+// dateStr: 押す(取り消す)日付 "yyyy-MM-dd"。省略すると今日。
+// 押し忘れた日をあとから押せるよう、今日以前・チャレンジ期間内の日付なら受け付ける。
+function toggleStamp(studentId, dateStr) {
   const sheet = getSheet()
   const rowIndex = findRowIndexById(sheet, studentId)
   if (rowIndex === -1) return { error: "student_not_found" }
 
+  const startCol = HEADERS.indexOf("start_date") + 1
   const stampDatesCol = HEADERS.indexOf("stamp_dates") + 1
   const countCol = HEADERS.indexOf("achieved_count") + 1
   const updatedCol = HEADERS.indexOf("updated_at") + 1
 
+  const today = todayStr()
+  const target = dateStr ? String(dateStr) : today
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(target)) return { error: "invalid_date" }
+  if (target > today) return { error: "future_date" }
+
+  const start = String(toDateStr(sheet.getRange(rowIndex, startCol).getValue()))
+  const [sy, sm, sd] = start.split("-").map(Number)
+  const lastDay = Utilities.formatDate(new Date(Date.UTC(sy, sm - 1, sd + PROGRAM_LENGTH - 1)), "UTC", "yyyy-MM-dd")
+  if (target < start || target > lastDay) return { error: "out_of_range" }
+
   const current = sheet.getRange(rowIndex, stampDatesCol).getValue()
   const dates = parseStampDatesCell(current)
-  const today = todayStr()
-  const idx = dates.indexOf(today)
+  const idx = dates.indexOf(target)
   let filled
   if (idx >= 0) {
     dates.splice(idx, 1)
     filled = false
   } else {
-    dates.push(today)
+    dates.push(target)
+    dates.sort()
     filled = true
   }
 

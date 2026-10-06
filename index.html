@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;700;800&display=swap" />
-  <link rel="stylesheet" href="style.css?v=15" />
+  <link rel="stylesheet" href="style.css?v=16" />
 </head>
 <body>
   <main id="main-el">
@@ -140,7 +140,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
   <script src="config.js?v=4"></script>
-  <script src="app.js?v=5"></script>
+  <script src="app.js?v=6"></script>
   <script>
     const ADMIN_SESSION_KEY = "csc_admin_ok"
     const DRAFT_KEY = "csc_register_draft"
@@ -324,7 +324,7 @@
       }
 
       if (todayOffset >= 0 && todayOffset < PROGRAM_LENGTH) {
-        footnoteEl.textContent = "今日のマスをタップしてスタンプを押そう(もう一度タップで取り消せます)"
+        footnoteEl.textContent = "今日までのマスをタップしてスタンプを押そう(押し忘れた日もOK。もう一度タップで取り消せます)"
       } else if (todayOffset < 0) {
         footnoteEl.textContent = "チャレンジ開始日になったら、スタンプを押せるようになります"
       } else {
@@ -341,7 +341,9 @@
         if (day.isFuture) btn.classList.add("is-future")
         btn.textContent = day.filled ? "★" : String(day.index)
         btn.setAttribute("aria-label", `${day.index}日目${day.filled ? "・達成済み" : ""}`)
-        if (day.isToday) {
+        // 今日までのマスは押せる(押し忘れた日をあとから押せるように)。未来の日だけ押せない
+        if (!day.isFuture) {
+          btn.classList.add("is-open")
           btn.addEventListener("click", () => handleToggle(day))
         } else {
           btn.disabled = true
@@ -369,7 +371,7 @@
       renderCard()
 
       try {
-        const result = await toggleTodayStamp(student.id)
+        const result = await toggleStamp(student.id, day.date)
         stampDates = new Set(result.stamp_dates)
       } catch {
         stampDates = previousStampDates
