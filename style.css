@@ -580,3 +580,15 @@ input[type="text"]:focus {
   color: var(--background);
   box-shadow: var(--glow-shadow);
 }
+
+.site-switch-soon {
+  margin-left: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  font-family: "Hiragino Maru Gothic ProN", "Hiragino Sans", "Yu Gothic", sans-serif;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--accent);
+  vertical-align: 1px;
+}

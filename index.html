@@ -7,14 +7,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;700;800&display=swap" />
-  <link rel="stylesheet" href="style.css?v=17" />
+  <link rel="stylesheet" href="style.css?v=18" />
 </head>
 <body>
   <main id="main-el">
     <!-- ツールの切り替え(31日間チャレンジ ⇔ 自分満たし)。自分満たし側にも同じ並びの切り替えがある -->
     <nav class="site-switch" aria-label="ツールの切り替え">
       <a class="site-switch-item active" href="./" aria-current="page">チャレンジシート</a>
-      <a class="site-switch-item" href="https://fasting-test.github.io/jibun-mitashi-card/">自分満たし</a>
+      <a class="site-switch-item" id="site-switch-hitomitashi" href="https://fasting-test.github.io/jibun-mitashi-card/">自分満たし</a>
     </nav>
 
     <div class="tab-bar">
@@ -152,6 +152,15 @@
     const DRAFT_KEY = "csc_register_draft"
 
     const mainEl = document.getElementById("main-el")
+
+    // 自分満たしのオープン前(11/1より前)は、ボタンに「11/1〜」の印を付ける(11/1になると自動で消える)
+    const HITOMITASHI_START_DATE = "2026-11-01"
+    if (dayOffsetFromStart(HITOMITASHI_START_DATE) < 0) {
+      const soon = document.createElement("span")
+      soon.className = "site-switch-soon"
+      soon.textContent = "11/1〜"
+      document.getElementById("site-switch-hitomitashi").appendChild(soon)
+    }
     const tabBtnStudent = document.getElementById("tab-btn-student")
     const tabBtnAdmin = document.getElementById("tab-btn-admin")
     const tabPanelStudent = document.getElementById("tab-panel-student")
