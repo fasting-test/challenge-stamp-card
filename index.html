@@ -14,7 +14,7 @@
     <!-- ツールの切り替え(31日間チャレンジ ⇔ 自分満たし)。自分満たし側にも同じ並びの切り替えがある -->
     <nav class="site-switch" aria-label="ツールの切り替え">
       <a class="site-switch-item active" href="./" aria-current="page">チャレンジシート</a>
-      <a class="site-switch-item" id="site-switch-hitomitashi" href="https://fasting-test.github.io/jibun-mitashi-card/">自分満たし</a>
+      <a class="site-switch-item" id="site-switch-hitomitashi" href="https://fasting-test.github.io/jibun-mitashi-card/">わたし推し活</a>
     </nav>
 
     <div class="tab-bar">
@@ -153,7 +153,7 @@
 
     const mainEl = document.getElementById("main-el")
 
-    // 自分満たしのオープン前(11/1より前)は、ボタンに「11/1〜」の印を付ける(11/1になると自動で消える)
+    // わたし推し活のオープン前(11/1より前)は、ボタンに「11/1〜」の印を付ける(11/1になると自動で消える)
     const HITOMITASHI_START_DATE = "2026-11-01"
     if (dayOffsetFromStart(HITOMITASHI_START_DATE) < 0) {
       const soon = document.createElement("span")
